@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>montel</title>
+<meta name="generator" content="WYSIWYG Web Builder 14 - http://www.wysiwygwebbuilder.com">
+<link href="css/main.css" rel="stylesheet">
+<link href="css/montel.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body 
+<div id="container">
+<div id="wb_Text1" style="position:absolute;left:16px;top:741px;width:103px;height:16px;z-index:0;">
+<span style="color:#FFFFFF;font-family:Arial;font-size:13px;">(c) 2020 v0.3</span></div>
+<div id="wb_Image1" style="position:absolute;left:0px;top:0px;width:162px;height:121px;z-index:1;">
+<img src="images/logo_montel.png" id="Image1" alt=""></div>
+<div id="wrapper">
+      <div id="phone">
+        <div id="numberDisplay">
+          <input type='tel'>
+        </div>
+        <div id="dialpad" class="button-3">
+          <ul>
+            <li class="first">1</li>
+            <li>2</li>
+            <li class="last">3</li>
+            <li class="first">4</li>
+            <li>5</li>
+            <li class="last">6</li>
+            <li class="first">7</li>
+            <li>8</li>
+            <li class="last">9</li>
+            <li>0</li>
+          </ul>
+        </div>
+        <div id="actions" class="button-3 deactive">
+          <ul>
+            <li href="" class="back ready">Назад</li>
+            <li href="" class="clear">Очистить</li>
+			<li href="" class="call">Далее</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/button-action.js"></script>
+	<script>
+	$.ajax({
+	  url: "http://127.0.0.1:8080/notes",
+	  cache: false,
+	  success: function(html){
+		if(html == "0"){
+			var request = new XMLHttpRequest();
+			request.open("GET", "http://127.0.0.1:8080/disable");
+			request.send();
+		}
+	  }
+	});
+	
+	</script>
+</div>
+</body>
+</html>

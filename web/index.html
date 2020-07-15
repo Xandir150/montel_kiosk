@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>HOME</title>
+<meta name="generator" content="WYSIWYG Web Builder 14 - http://www.wysiwygwebbuilder.com">
+<link href="css/main.css" rel="stylesheet">
+<link href="css/index.css" rel="stylesheet">
+<script src="js/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+<div id="container">
+<a href="#" onclick="window.location.href='./montel.html';return false;">
+<picture id="wb_Picture1" style="position:absolute;left:355px;top:278px;width:285px;height:213px;z-index:0">
+<img src="images/logo_montel.png" id="Picture1" alt="" srcset="">
+</picture>
+</a>
+<div id="wb_Text1" style="color:#FFFFFF;position:absolute;left:16px;top:741px;width:103px;height:16px;z-index:1;">
+<span style="color:#FFFFFF;font-family:Arial;font-size:13px;">(c) 2020 v0.3</span></div>
+<div id="Html1" style="position:absolute;left:0px;top:0px;width:245px;height:80px;z-index:2">
+<script>  
+setInterval(function () {  
+ date = new Date(),  
+ h = date.getHours(),  
+ m = date.getMinutes(),  
+ s = date.getSeconds(),  
+ h = (h < 10) ? '0' + h : h,  
+ m = (m < 10) ? '0' + m : m,  
+ s = (s < 10) ? '0' + s : s,  
+ document.getElementById('time').innerHTML = h + ':' + m + ':' + s;  
+}, 1000);
+</script>
+<script>
+var request = new XMLHttpRequest();
+function reqReadyStateChange() {
+    if (request.readyState == 4) {
+        var status = request.status;
+        if (status == 200) {
+            document.getElementById("wb_Text1").innerHTML=request.responseText;
+        }
+    }
+}
+
+request.open("GET", "http://127.0.0.1:8080/start");
+//request.open("GET", "https://www.rusgruppa.me/testPhone.php?phone=069279649");
+//request.setRequestHeader('Access-Control-Allow-Origin', '*');
+request.onreadystatechange = reqReadyStateChange;
+request.send();
+</script>
+<span style="color:#FFFFFF; font-size:45pt; padding:5px;">
+<span id="time">00:00:00</span>
+</span></div>
+</div>
+</body>
+</html>

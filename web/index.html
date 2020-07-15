@@ -16,7 +16,7 @@
 </picture>
 </a>
 <div id="wb_Text1" style="color:#FFFFFF;position:absolute;left:16px;top:741px;width:103px;height:16px;z-index:1;">
-<span style="color:#FFFFFF;font-family:Arial;font-size:13px;">(c) 2020 v0.3</span></div>
+<span style="color:#FFFFFF;font-family:Arial;font-size:13px;">(c) 2020 v0.5</span></div>
 <div id="Html1" style="position:absolute;left:0px;top:0px;width:245px;height:80px;z-index:2">
 <script>  
 setInterval(function () {  
@@ -42,10 +42,16 @@ function reqReadyStateChange() {
 }
 
 request.open("GET", "http://127.0.0.1:8080/start");
-//request.open("GET", "https://www.rusgruppa.me/testPhone.php?phone=069279649");
-//request.setRequestHeader('Access-Control-Allow-Origin', '*');
 request.onreadystatechange = reqReadyStateChange;
 request.send();
+
+setInterval(function() {
+	$.ajax({
+	  url: "http://127.0.0.1:8082/ping",
+	  cache: false,
+	});
+	},
+60*1000);
 </script>
 <span style="color:#FFFFFF; font-size:45pt; padding:5px;">
 <span id="time">00:00:00</span>

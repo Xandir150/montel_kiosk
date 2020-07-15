@@ -10,14 +10,12 @@ import atexit
 import logging
 import argparse
 import datetime
-import urlparse
 from signal import SIGTERM
 from wsgiref.simple_server import make_server
 from webob import Request, exc
 from time import sleep
 from multiprocessing import Process, Queue
 from essp_api import EsspApi
-from BaseHTTPServer import BaseHTTPRequestHandler
 
 RESP_HEADERS = [('Access-Control-Allow-Origin', '*')]
 
@@ -71,7 +69,7 @@ class App(object):
         return exc.HTTPNotFound()(environ, start_response)
 
     def index(self, req):
-        return 'Usage: GET /start, /enable, /notes, /poll, /disable, /getuserinfo'
+        return 'Usage: GET /start, /enable, /notes, /poll, /disable'
 
     def simple_cmd(self, req):
         cmd = req.urlvars['cmd']
@@ -96,12 +94,6 @@ class App(object):
     def notes(self, req):
         self.poll(None)
         return int(self.credit)
-
-    def getuserinfo(self, req):
-        parsed_path = urlparse.urlparse(self.path)
-        queryes = urlparse.parse_qs(parsed_path.query, keep_blank_values=True)
-        queryes['num'][0]
-        return
 
 
 Euros = {0:0, 1:5, 2:10, 3:20, 4:50, 5:100, 6:200}
@@ -188,7 +180,6 @@ def http_server_worker(params):
     app.add_route('/start',       app.simple_cmd, cmd='start')
     app.add_route('/poll',        app.poll)
     app.add_route('/notes',       app.notes)
-    app.add_route('/getuserinfo', app.getuserinfo)
 
     httpd = make_server(params.host, int(params.port), app)
     try:

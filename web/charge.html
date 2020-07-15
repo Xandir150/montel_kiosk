@@ -24,7 +24,7 @@ var data = window
         {}
     );
 
-console.log( data['num']);
+//console.log( data['num']);
 
 var reqPerson = new XMLHttpRequest();
 function reqGetPerson() {
@@ -36,8 +36,7 @@ function reqGetPerson() {
     }
 }
 
-reqPerson.open("GET", "https://www.rusgruppa.me/testPhone.php?phone=" + data['num']);
-reqPerson.setRequestHeader('Access-Control-Allow-Origin', '*');
+reqPerson.open("GET", "http://127.0.0.1:8082/getuserinfo?num=" + data['num']);
 reqPerson.onreadystatechange = reqGetPerson;
 reqPerson.send();
 
@@ -46,26 +45,26 @@ var request = new XMLHttpRequest();
 request.open("GET", "http://127.0.0.1:8080/enable");
 request.send();
 
-/*setInterval(function() {
-$.ajax({
-  url: "http://127.0.0.1:8080/notes",
-  cache: false,
-  success: function(html){
-	if(html != "0"){
-		$("#Label1").text(html + " €");
-	}
-  }
-});
-},
-500);*/ 
-function finish() {
-	var count = 0;
+setInterval(function() {
 	$.ajax({
 	  url: "http://127.0.0.1:8080/notes",
 	  cache: false,
 	  success: function(html){
 		if(html != "0"){
-			count = html;
+			$("#Label1").text(html + " €");
+		}
+	  }
+	});
+	},
+500);
+function finish() {
+	var amount = 0;
+	$.ajax({
+	  url: "http://127.0.0.1:8080/notes",
+	  cache: false,
+	  success: function(html){
+		if(html != "0"){
+			amount = html;
 			$("#Label1").text(html + " €");
 		}
 	  }
@@ -73,9 +72,9 @@ function finish() {
 	
 	
 	
-	var http = new XMLHttpRequest();
-	var url = 'http://www.rusgruppa.me/api/charge';
-	var params = 'number='+data['num']+'&amount='+99900+'&date='+Date.now()+'&place='+'TEST'+'&payment_id='+Math.floor(Date.now() / 1000);
+	/*var http = new XMLHttpRequest();
+	var url = 'http://127.0.0.1:8082/charge';
+	var params = 'number='+data['num']+'&amount='+amount*100+'&date='+Date.now()+'&payment_id='+Math.floor(Date.now() / 1000);
 	http.open('POST', url, true);
 	http.withCredentials = true;
 	http.setRequestHeader("Authorization", 'Basic ' + btoa('europayment:europayment.me.in'));
@@ -84,21 +83,27 @@ function finish() {
 		console.log(http.responseText);
 		console.log(params);
 	}
-	http.send(params);
+	http.send(params);*/
+	//console.log(amount);
+	$.ajax({
+	  url: 'http://127.0.0.1:8082/charge?number='+data['num']+'&amount='+amount*100+'&provider='+data['provider']+'&date='+Date.now()+'&payment_id='+Math.floor(Date.now() / 1000),
+	  cache: false,
+	});
+
 	
-	//location.href = "./finish.html"; 
+	location.href = "./finish.html"; 
 }
 
 </script>
 <body>
 <div id="container">
 <div id="wb_Text1" style="position:absolute;left:16px;top:741px;width:103px;height:16px;z-index:0;">
-<span style="color:#FFFFFF;font-family:Arial;font-size:13px;">(c) 2020 v0.3</span></div>
+<span style="color:#FFFFFF;font-family:Arial;font-size:13px;">(c) 2020 v0.9</span></div>
 <div id="wb_Image1" style="position:absolute;left:0px;top:0px;width:162px;height:121px;z-index:1;">
 <img src="images/logo_montel.png" id="Image1" alt=""></div>
 
 <label for="" id="Label2" style="color:#FFFFFF;position:absolute;left:162px;top:0px;width:813px;height:129px;line-height:129px;z-index:3;">""</label>
-<label for="" id="Label1" style="position:absolute;left:162px;top:102px;width:813px;height:129px;line-height:129px;z-index:2;">Вставьте банкноты или опустите монеты</label>
+<label for="" id="Label1" style="position:absolute;left:162px;top:102px;width:813px;height:129px;line-height:129px;z-index:2;">Вставьте банкноты</label>
 <input type="button" id="ButtonBack" onclick="window.location.href='./montel.html';return false;" name="" value="< Назад" style="position:absolute;left:155px;top:554px;width:250px;height:94px;z-index:4;">
 <input type="button" id="ButtonNext" onclick="finish()" name="" value="Оплатить" style="position:absolute;left:703px;top:554px;width:250px;height:94px;z-index:5;">
 </div>

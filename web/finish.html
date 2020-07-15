@@ -29,10 +29,14 @@ console.log( params['num']);
 var request = new XMLHttpRequest();
 			request.open("GET", "http://127.0.0.1:8080/disable");
 			request.send();
+
+setTimeout(function(){
+  window.location.href = './index.html';
+}, 20 * 1000);
 </script>
 <div id="container">
 <div id="wb_Text1" style="position:absolute;left:16px;top:741px;width:103px;height:16px;z-index:0;">
-<span style="color:#FFFFFF;font-family:Arial;font-size:13px;">(c) 2020 v0.3</span></div>
+<span style="color:#FFFFFF;font-family:Arial;font-size:13px;">(c) 2020 v0.4</span></div>
 <div id="wb_Image1" style="position:absolute;left:0px;top:0px;width:162px;height:121px;z-index:1;">
 <img src="images/logo_montel.png" id="Image1" alt=""></div>
 <label for="" id="Label1" style="position:absolute;left:162px;top:107px;width:813px;height:119px;line-height:119px;z-index:2;">Ожидайте зачисления</label>

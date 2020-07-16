@@ -23,3 +23,12 @@ else
     echo -e "\e[32m${folder} repo clone is Ok!\e[39m"
   fi
 fi
+chmod -R +x
+cp -u ${folder}/etc/* /etc/systemd/system
+systemctl enable  kiosk-proxy.service
+systemctl enable  kiosk-hw.service
+systemctl enable  kiosk.service
+daemon-reload
+systemctl start  kiosk-proxy.service
+systemctl start  kiosk-hw.service
+systemctl start  kiosk.service

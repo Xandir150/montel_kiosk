@@ -1,0 +1,15 @@
+[Unit]
+Description=Kiosk Hardware Daemon
+Wants=graphical.target
+After=graphical.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/user/montel_kiosk/services/acceptors/
+ExecStart=/usr/bin/python2 /home/user/montel_kiosk/services/acceptors/kiosk_server.py run -v 
+Restart=always
+User=root
+Group=root
+
+[Install]
+WantedBy=graphical.target

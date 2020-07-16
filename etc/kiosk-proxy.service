@@ -1,0 +1,15 @@
+[Unit]
+Description=Kiosk Proxy Daemon
+Wants=graphical.target
+After=graphical.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/user/
+ExecStart=/usr/bin/python2 /home/user/poluproxy.py
+Restart=always
+User=root
+Group=root
+
+[Install]
+WantedBy=graphical.target

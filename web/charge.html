@@ -88,17 +88,25 @@ function finish() {
 	$.ajax({
 	  url: 'http://127.0.0.1:8082/charge?number='+data['num']+'&amount='+amount*100+'&provider='+data['provider']+'&date='+Date.now()+'&payment_id='+Math.floor(Date.now() / 1000),
 	  cache: false,
+	  success: function(html){
+			const obj = JSON.parse(html);
+			if(obj.client_id === undefined){
+				$("#Label1").text("Платёж обработается с задержкой. Извините.");
+				setTimeout(function(){ location.href = "./finish.html";},5000);
+			} else {
+				$("#Label1").text("Секундочку....");
+				setTimeout(function(){ location.href = "./finish.html";},2000);
+			}
+	  }
 	});
-
 	
-	location.href = "./finish.html"; 
 }
 
 </script>
 <body>
 <div id="container">
 <div id="wb_Text1" style="position:absolute;left:16px;top:741px;width:103px;height:16px;z-index:0;">
-<span style="color:#FFFFFF;font-family:Arial;font-size:13px;">(c) 2020 v0.9</span></div>
+<span style="color:#FFFFFF;font-family:Arial;font-size:13px;">(c) 2020 v0.10</span></div>
 <div id="wb_Image1" style="position:absolute;left:0px;top:0px;width:162px;height:121px;z-index:1;">
 <img src="images/logo_montel.png" id="Image1" alt=""></div>
 

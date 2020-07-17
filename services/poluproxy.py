@@ -49,6 +49,8 @@ class GetHandler(BaseHTTPRequestHandler):
             base64string = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
             
             try:
+                with open('payments', 'a') as file:
+                    file.write(data+"\n")
                 req = urllib2.Request('http://www.rusgruppa.me/api/charge', data)
                 req.add_header("Authorization", "Basic %s" % base64string)
                 response = urllib2.urlopen(req)

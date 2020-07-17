@@ -13,6 +13,12 @@ then
   then
     git fetch --all
     git reset --hard origin/master
+	chmod -R +x
+	cp -u ${folder}/etc/* /etc/systemd/system
+	daemon-reload
+	systemctl restart  kiosk-proxy.service
+	systemctl restart  kiosk-hw.service
+	systemctl restart  kiosk.service
   fi
   cd -
 else
@@ -21,14 +27,13 @@ else
   if [ $? -eq "0" ] 
   then
     echo -e "\e[32m${folder} repo clone is Ok!\e[39m"
+	cp -u ${folder}/etc/* /etc/systemd/system
+	systemctl enable  kiosk-proxy.service
+	systemctl enable  kiosk-hw.service
+	systemctl enable  kiosk.service
+	daemon-reload
+	systemctl start  kiosk-proxy.service
+	systemctl start  kiosk-hw.service
+	systemctl start  kiosk.service
   fi
 fi
-chmod -R +x
-cp -u ${folder}/etc/* /etc/systemd/system
-systemctl enable  kiosk-proxy.service
-systemctl enable  kiosk-hw.service
-systemctl enable  kiosk.service
-daemon-reload
-systemctl start  kiosk-proxy.service
-systemctl start  kiosk-hw.service
-systemctl start  kiosk.service

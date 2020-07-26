@@ -15,7 +15,7 @@ then
     git reset --hard origin/master
 	chmod -R +x
 	cp -u ${folder}/etc/* /etc/systemd/system
-	daemon-reload
+	systemctl daemon-reload
 	systemctl restart  kiosk-proxy.service
 	systemctl restart  kiosk-hw.service
 	systemctl restart  kiosk.service
@@ -28,11 +28,12 @@ else
   then
     echo -e "\e[32m${folder} repo clone is Ok!\e[39m"
 	apt install sqlite3 -y
+	pip3 install requests
 	cp -u ${folder}/etc/* /etc/systemd/system
 	systemctl enable  kiosk-proxy.service
 	systemctl enable  kiosk-hw.service
 	systemctl enable  kiosk.service
-	daemon-reload
+	systemctl daemon-reload
 	systemctl start  kiosk-proxy.service
 	systemctl start  kiosk-hw.service
 	systemctl start  kiosk.service

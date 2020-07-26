@@ -16,7 +16,7 @@ place = 'TEST'
 con = sql.connect('local.db')
 
 def sendpay():
-    threading.Timer(5.0, sendpay).start()
+    threading.Timer(30.0, sendpay).start()
     con = sql.connect('local.db')
     with con:
         cur = con.cursor()
@@ -32,6 +32,7 @@ def sendpay():
             }
             data = urllib.urlencode(values)
             try:
+                response = requests.post('https://api.l2rus.net/charge', data=values)
                 response = requests.post('http://www.rusgruppa.me/api/charge', data=values, auth=(username, password))
                 if response.ok:
                     cur.execute(f"UPDATE payments SET paid=1 WHERE id={row[0]}")

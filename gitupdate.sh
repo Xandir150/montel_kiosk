@@ -27,6 +27,7 @@ else
   if [ $? -eq "0" ] 
   then
     echo -e "\e[32m${folder} repo clone is Ok!\e[39m"
+	apt install sqlite3 -y
 	cp -u ${folder}/etc/* /etc/systemd/system
 	systemctl enable  kiosk-proxy.service
 	systemctl enable  kiosk-hw.service

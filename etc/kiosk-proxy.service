@@ -6,7 +6,7 @@ After=graphical.target
 [Service]
 Type=simple
 WorkingDirectory=/home/user/
-ExecStart=/usr/bin/python2 /home/user/poluproxy.py
+ExecStart=/usr/bin/python3 /home/user/poluproxy.py
 Restart=always
 User=root
 Group=root

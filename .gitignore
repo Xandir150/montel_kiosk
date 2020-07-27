@@ -1,3 +1,4 @@
 
 services/payments
 *.rar
+services/local.db

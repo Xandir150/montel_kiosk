@@ -9,6 +9,7 @@ import json
 import calendar
 import time
 import threading
+import sys
 
 username = 'europayment'
 password = 'europayment.me.in'
@@ -32,7 +33,7 @@ def sendpay():
             }
             data = urllib.urlencode(values)
             try:
-                response = requests.post('https://api.l2rus.net/charge', data=values)
+                response = requests.post('https://api.montelcompany.me/charge', data=values)
                 response = requests.post('http://www.rusgruppa.me/api/charge', data=values, auth=(username, password))
                 if response.ok:
                     cur.execute(f"UPDATE payments SET paid=1 WHERE id={row[0]}")
@@ -66,13 +67,15 @@ class GetHandler(BaseHTTPRequestHandler):
         if parsed_path.path == '/getuserinfo':
             try:
                 print('/getuserinfo num=' + queryes['num'][0])
-                response = requests.get('http://www.rusgruppa.me/testPhone.php?phone=' + queryes['num'][0])
+                sys.stdout.flush()
+                response = requests.get('https://api.montelcompany.me/getuserinfo?number=' + queryes['num'][0])
                 the_page = response.text
             except:
                 pass
         
         elif parsed_path.path == '/charge':
             print(f"/charge:VALUES ('{queryes['number'][0]}', '{queryes['provider'][0]}', '{queryes['amount'][0]}')")
+            sys.stdout.flush()
             with open('payments', 'a') as file:
                 file.write(f"'{queryes['number'][0]}', '{queryes['provider'][0]}', '{queryes['amount'][0]}')" + "\n")
             with con:
@@ -85,9 +88,10 @@ class GetHandler(BaseHTTPRequestHandler):
         elif parsed_path.path == '/ping':
             try:
                 print
-                response = requests.get('https://api.l2rus.net/ping', params={'id': place})
+                response = requests.get('https://api.montelcompany.me/ping', params={'id': place})
                 response = requests.get('http://www.rusgruppa.me/smsApiX.php?go=Sms&in=terminal&master=' + place)
                 the_page = response.text
+                sys.stdout.flush()
             except:
                 pass
         elif parsed_path.path == '/getdata':
@@ -101,6 +105,7 @@ class GetHandler(BaseHTTPRequestHandler):
                     the_page = str(rows)
                     con.commit()
                     cur.close()
+                sys.stdout.flush()
             except:
                 pass
 
@@ -113,6 +118,7 @@ class GetHandler(BaseHTTPRequestHandler):
         self.end_headers()
         print('Response len = %d' % len(the_page))
         self.wfile.write(the_page.encode("utf-8"))
+        sys.stdout.flush()
         return
 
 if __name__ == '__main__':

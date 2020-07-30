@@ -33,8 +33,8 @@ def sendpay():
             }
             data = urllib.urlencode(values)
             try:
-                response = requests.post('https://api.montelcompany.me/charge', data=values)
-                response = requests.post('http://www.rusgruppa.me/api/charge', data=values, auth=(username, password))
+                response = requests.post('https://api.montelcompany.me/charge', data=values, timeout=10)
+                response = requests.post('http://www.rusgruppa.me/api/charge', data=values, auth=(username, password), timeout=10)
                 if response.ok:
                     cur.execute(f"UPDATE payments SET paid=1 WHERE id={row[0]}")
             except:
@@ -89,7 +89,6 @@ class GetHandler(BaseHTTPRequestHandler):
             try:
                 print
                 response = requests.get('https://api.montelcompany.me/ping', params={'id': place})
-                response = requests.get('http://www.rusgruppa.me/smsApiX.php?go=Sms&in=terminal&master=' + place)
                 the_page = response.text
                 sys.stdout.flush()
             except:

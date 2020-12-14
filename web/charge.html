@@ -30,6 +30,7 @@ function reqGetPerson() {
         var status = reqPerson.status;
         if (status == 200) {
             document.getElementById("Label2").innerHTML=reqPerson.responseText;
+			
         }
     }
 }
@@ -67,6 +68,7 @@ function finish() {
 	document.getElementById('ButtonNext').hidden = true;
 	document.getElementById('ButtonBack').hidden = true;
 	document.getElementById('Label1').hidden = true;
+	document.getElementById('arrow').hidden = true;
 	document.getElementById('Label3').hidden = false;
 	$("#Label1").text("Платеж "+amount+" € на номер " + data['num']+".....");
 	$.ajax({	  
@@ -95,7 +97,7 @@ function finish() {
 <input hidden type="button" id="ButtonNext" onclick="finish()" name="" value="Оплатить" style="position:absolute;left:703px;top:554px;width:250px;height:94px;z-index:5;">
 </div>
 <div style="position: absolute; top: 0%; right: 0; z-index: 5; ">
-    <img style="height: 200px;" src="images/arrow.png">
+    <img id="arrow" style="height: 200px;" src="images/arrow.png">
 </div>
 </body>
 </html>

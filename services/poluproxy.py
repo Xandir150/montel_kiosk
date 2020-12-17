@@ -10,10 +10,12 @@ import calendar
 import time
 import threading
 import sys
+import os
 
 username = 'europayment'
 password = 'europayment.me.in'
-place = 'TEST'
+# PLACE = HOSTNAME
+place = str(os.uname().nodename)
 con = sql.connect('local.db')
 
 def sendpay():

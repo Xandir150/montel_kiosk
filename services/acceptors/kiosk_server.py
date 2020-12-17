@@ -26,7 +26,8 @@ class App(object):
         self.routes = []
         self.queue_request = Queue()
         self.queue_response = Queue()
-        self.credit = 0
+        self.credit = 0.0
+        self.credit_coin = 0.0
 
     @staticmethod
     def _template_to_regex(template):
@@ -71,9 +72,22 @@ class App(object):
     def index(self, req):
         return 'Usage: GET /start, /enable, /notes, /poll, /disable'
 
+
+    def simple_cent(self, req):
+        cmd = req.urlvars['cmd']
+        if cmd == '5c':  self.credit_coin += 0.05
+        if cmd == '10c': self.credit_coin += 0.1
+        if cmd == '20c': self.credit_coin += 0.2
+        if cmd == '50c': self.credit_coin += 0.5
+        if cmd == '1e' : self.credit_coin += 1
+        if cmd == '2e' : self.credit_coin += 2
+        return 'ok'
+
     def simple_cmd(self, req):
         cmd = req.urlvars['cmd']
-        if cmd in ('start', 'disable', 'enable'): self.credit = 0
+        if cmd in ('start', 'disable', 'enable'):
+            self.credit = 0.0
+            self.credit_coin = 0.0
         self.queue_request.put({'cmd': cmd})
         return 'ok'
 
@@ -83,7 +97,9 @@ class App(object):
             try:
                 response = self.queue_response.get(block=False)
                 try:
-                    if response['credit']: self.credit = response['credit']
+                    if response['credit']:
+                        self.credit = response['credit']
+                        #self.credit += self.credit_coin
                 except:
                     pass
                 data.append(response)
@@ -93,7 +109,7 @@ class App(object):
 
     def notes(self, req):
         self.poll(None)
-        return int(self.credit)
+        return '%.2f' % float(self.credit + self.credit_coin)
 
 
 Euros = {0:0, 1:5, 2:10, 3:20, 4:50, 5:100, 6:200}
@@ -122,12 +138,18 @@ def note_acceptor_worker(queue_request, queue_response, params):
         else:
             res = {'cmd': cmd, 'result': False}
             logger.info('[WORKER] command: %s' % cmd)
-            
+
             if cmd in ('start', 'disable'):
                 credit = 0
                 essp_state = 'disabled'
                 
             elif cmd == 'enable':
+
+                essp.sync()
+                essp.enable_higher_protocol()
+                #essp.disable()
+                essp.set_inhibits(essp.easy_inhibit([1, 1, 1, 1, 1, 1, 1]), '0')
+
                 credit = 0
                 essp_state = 'enabled'
                     
@@ -144,7 +166,6 @@ def note_acceptor_worker(queue_request, queue_response, params):
                 
             queue_response.put(res)
             continue
-        
         
         if essp_state == 'enabled':
             for event in essp.poll():
@@ -175,6 +196,14 @@ def http_server_worker(params):
     app.add_route('/enable',  app.simple_cmd, cmd='enable')  # |reset
     app.add_route('/disable', app.simple_cmd, cmd='disable') # |reset
     app.add_route('/hold',    app.simple_cmd, cmd='hold')    # |reset
+
+    app.add_route('/1', app.simple_cent, cmd='5c')
+    app.add_route('/2', app.simple_cent, cmd='10c')
+    app.add_route('/3', app.simple_cent, cmd='20c')
+    app.add_route('/4', app.simple_cent, cmd='50c')
+    app.add_route('/5', app.simple_cent, cmd='1e')
+    app.add_route('/6', app.simple_cent, cmd='2e')
+
     app.add_route('/display_on',  app.simple_cmd, cmd='display_on')
     app.add_route('/display_off', app.simple_cmd, cmd='display_off')
     app.add_route('/start',       app.simple_cmd, cmd='start')

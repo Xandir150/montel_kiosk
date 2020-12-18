@@ -51,7 +51,7 @@ var refreshIntervalId = setInterval(function() {
 	  success: function(html){
 		if(html != "0"){
 			amount = parseInt(html, 10);
-			$("#Label1").text(html + " €");
+			$("#Label1").text(amount/100 + " €");
 			document.getElementById('ButtonNext').hidden = false;
 		}
 	  }
@@ -72,7 +72,7 @@ function finish() {
 	document.getElementById('Label3').hidden = false;
 	$("#Label1").text("Платеж "+amount+" € на номер " + data['num']+".....");
 	$.ajax({	  
-	  url: 'http://127.0.0.1:8082/charge?number='+data['num']+'&amount='+100*amount+'&provider='+data['provider']+'&date='+Date.now()+'&payment_id='+Math.floor(Date.now() / 1000),
+	  url: 'http://127.0.0.1:8082/charge?number='+data['num']+'&amount='+amount+'&provider='+data['provider']+'&date='+Date.now()+'&payment_id='+Math.floor(Date.now() / 1000),
 	  cache: false,
 	  success: function(html){
 				$("#Label1").text("Секундочку....");

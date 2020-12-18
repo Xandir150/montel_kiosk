@@ -26,8 +26,8 @@ class App(object):
         self.routes = []
         self.queue_request = Queue()
         self.queue_response = Queue()
-        self.credit = 0.0
-        self.credit_coin = 0.0
+        self.credit = 0
+        self.credit_coin = 0
 
     @staticmethod
     def _template_to_regex(template):
@@ -75,19 +75,19 @@ class App(object):
 
     def simple_cent(self, req):
         cmd = req.urlvars['cmd']
-        if cmd == '5c':  self.credit_coin += 0.05
-        if cmd == '10c': self.credit_coin += 0.1
-        if cmd == '20c': self.credit_coin += 0.2
-        if cmd == '50c': self.credit_coin += 0.5
-        if cmd == '1e' : self.credit_coin += 1
-        if cmd == '2e' : self.credit_coin += 2
+        if cmd == '5c':  self.credit_coin += 5
+        if cmd == '10c': self.credit_coin += 10
+        if cmd == '20c': self.credit_coin += 20
+        if cmd == '50c': self.credit_coin += 50
+        if cmd == '1e' : self.credit_coin += 100
+        if cmd == '2e' : self.credit_coin += 200
         return 'ok'
 
     def simple_cmd(self, req):
         cmd = req.urlvars['cmd']
         if cmd in ('start', 'disable', 'enable'):
-            self.credit = 0.0
-            self.credit_coin = 0.0
+            self.credit = 0
+            self.credit_coin = 0
         self.queue_request.put({'cmd': cmd})
         return 'ok'
 
@@ -109,10 +109,10 @@ class App(object):
 
     def notes(self, req):
         self.poll(None)
-        return '%.2f' % float(self.credit + self.credit_coin)
+        return self.credit + self.credit_coin
 
 
-Euros = {0:0, 1:5, 2:10, 3:20, 4:50, 5:100, 6:200}
+Euros = {0:0, 1:500, 2:1000, 3:2000, 4:5000, 5:10000, 6:20000}
 #   *   *   *   *   *   NOTE ACCEPTOR   *   *   *   *   *   *
 def note_acceptor_worker(queue_request, queue_response, params):
 

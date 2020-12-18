@@ -1,0 +1,14 @@
+[Unit]
+Description=Kiosk Pulsed Coin Acceptor support daemon
+After=local-fs.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/user/montel_kiosk/services/acceptors
+ExecStart=/usr/bin/python3 /home/user/montel_kiosk/services/acceptors/kiosk_coin.py
+Restart=always
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

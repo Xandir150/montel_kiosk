@@ -1,0 +1,13 @@
+[Unit]
+Description=Update Kiosk files after network online
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/user
+ExecStart=/home/user/gitupdate.sh
+RemainAfterExit=false
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target

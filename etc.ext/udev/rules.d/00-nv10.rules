@@ -1,0 +1,2 @@
+
+SUBSYSTEMS=="usb", KERNEL=="ttyACM[0-9]*", ACTION=="add", ATTRS{idProduct}=="4104", ATTRS{idVendor}=="191c", MODE="666", SYMLINK+="nv10", GROUP="dialout"

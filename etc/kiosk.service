@@ -2,6 +2,8 @@
 Description=Chromium Kiosk
 Wants=graphical.target
 After=graphical.target
+After=kiosk-hw.service
+
 
 [Service]
 Environment=DISPLAY=:0.0

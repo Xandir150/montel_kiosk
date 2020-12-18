@@ -2,6 +2,8 @@
 Description=Kiosk Hardware Daemon
 Wants=graphical.target
 After=graphical.target
+After=dev-nv10.device
+BindsTo=dev-nv10.device
 
 [Service]
 Type=simple

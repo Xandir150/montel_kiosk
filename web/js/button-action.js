@@ -147,16 +147,17 @@
 	  }
   });
 
-  $('div#actions li.back').click(function(){
-	$.ajax({
-	  url: "http://127.0.0.1:8080/notes",
-	  cache: false,
-	  success: function(html){
-		if(html == "0"){
-			location.href = "./index.html";
-		}
-	  }
-	}); 
+  $('div#actions li.back').click(function () {
+    location.href = "./index.html";
+	// $.ajax({
+	//   url: "http://127.0.0.1:8080/notes",
+	//   cache: false,
+	//   success: function(html){
+	// 	if(html == "0"){
+	// 		location.href = "./index.html";
+	// 	}
+	//   }
+	// }); 
   });
 
 })(jQuery);

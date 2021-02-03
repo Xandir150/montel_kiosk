@@ -36,7 +36,7 @@ def sendpay():
             data = urllib.urlencode(values)
             try:
                 response = requests.post('https://api.montelcompany.me/charge', data=values, timeout=10)
-                response = requests.post('http://www.rusgruppa.me/api/charge', data=values, auth=(username, password), timeout=10)
+                # response = requests.post('http://www.rusgruppa.me/api/charge', data=values, auth=(username, password), timeout=10)
                 if response.ok:
                     cur.execute(f"UPDATE payments SET paid=1 WHERE id={row[0]}")
             except:

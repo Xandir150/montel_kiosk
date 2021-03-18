@@ -23,6 +23,9 @@ then
   cd -
 else
   echo "${folder} not exist"
+  zypper update -y
+  zypper rm -y xscreensaver
+  zypper install -y midori nano
   git clone $repo_url
   if [ $? -eq "0" ] 
   then

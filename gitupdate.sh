@@ -42,4 +42,3 @@ else
 	systemctl start  kiosk.service
   fi
 fi
-reboot

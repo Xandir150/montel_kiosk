@@ -17,9 +17,9 @@ body {
 #Picture1 {
   border: 1px solid #ff0000;
   padding: 0;
-  -webkit-animation: animate-border 1000ms linear 0ms infinite normal both;
-  -moz-animation: animate-border 1000ms linear 0ms infinite normal both;
-  animation: animate-border 1000ms linear 0ms infinite normal both;
+  /* -webkit-animation: animate-border 1s linear 1s infinite normal both;
+  -moz-animation: animate-border 1s linear 1s infinite normal both;
+  animation: animate-border 1s linear 1s infinite normal both; */
   left: 0;
   top: 0;
   width: 100%;

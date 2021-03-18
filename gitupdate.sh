@@ -1,8 +1,5 @@
 #!/bin/bash
 
-zypper update -y
-zypper rm -y xscreensaver
-zypper install -y midori nano
 folder="/home/user/montel_kiosk/"
 repo_url="https://github.com/Xandir150/montel_kiosk.git"
 if [ -d ${folder} ]
@@ -26,6 +23,9 @@ then
   cd -
 else
   echo "${folder} not exist"
+  zypper update -y
+  zypper rm -y xscreensaver
+  zypper install -y midori nano
   git clone $repo_url
   if [ $? -eq "0" ] 
   then

@@ -7,6 +7,7 @@
 <link href="css/main.css" rel="stylesheet">
 <link href="css/montel.css" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<script src="js/utils.js"></script>
 </head>
 <body 
 <div id="container">
@@ -45,6 +46,7 @@
     <script src="js/jquery-3.5.1.min.js"></script>
     <script src="js/button-action.js"></script>
 	<script>
+    preventSelection(document);
 	$.ajax({
 	  url: "http://127.0.0.1:8080/notes",
 	  cache: false,

@@ -60,7 +60,11 @@ var refreshIntervalId = setInterval(function() {
 	});
 	},
 500);
-
+setTimeout(function(){
+		if(amount === 0){
+		  window.location.href = './index.html';
+		}
+	}, 120 * 1000);
 function finish() {
 	clearInterval(refreshIntervalId);
 	$.ajax({

@@ -13,7 +13,7 @@ then
   then
     git fetch --all
     git reset --hard origin/master
-	chmod -R +x
+	chmod -R +x *.sh
 	cp -u ${folder}/etc/* /etc/systemd/system
 	systemctl daemon-reload
 	systemctl restart  kiosk-proxy.service

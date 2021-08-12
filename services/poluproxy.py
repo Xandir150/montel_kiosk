@@ -11,6 +11,8 @@ import time
 import threading
 import sys
 import os
+import uuid
+
 
 username = 'europayment'
 password = 'europayment.me.in'
@@ -31,7 +33,8 @@ def sendpay():
                 'number': row[1],
                 'provider': row[2],
                 'amount': row[3],
-                'place': place
+                'place': place,
+                'uuid': str(row[4])
             }
             data = urllib.urlencode(values)
             try:
@@ -48,7 +51,7 @@ class GetHandler(BaseHTTPRequestHandler):
     with con:
         cur = con.cursor()
         cur.execute("CREATE TABLE IF NOT EXISTS `payments` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
-                    "`number` INTEGER, `provider` STRING, `amount` INTEGER, `paid` INTEGER DEFAULT 0)")
+                    "`number` INTEGER, `provider` STRING, `amount` INTEGER, `uuid` STRING, `paid` INTEGER DEFAULT 0)")
         con.commit()
     sendpay()
 
@@ -78,11 +81,12 @@ class GetHandler(BaseHTTPRequestHandler):
         elif parsed_path.path == '/charge':
             print(f"/charge:VALUES ('{queryes['number'][0]}', '{queryes['provider'][0]}', '{queryes['amount'][0]}')")
             sys.stdout.flush()
+            uuida = uuid.uuid4()
             with open('payments', 'a') as file:
                 file.write(f"'{queryes['number'][0]}', '{queryes['provider'][0]}', '{queryes['amount'][0]}')" + "\n")
             with con:
                 cur = con.cursor()
-                cur.execute(f"INSERT INTO `payments` (`number`, `provider`, `amount`) VALUES ('{queryes['number'][0]}', '{queryes['provider'][0]}', '{queryes['amount'][0]}');")
+                cur.execute(f"INSERT INTO `payments` (`number`, `provider`, `amount`, `uuid`) VALUES ('{queryes['number'][0]}', '{queryes['provider'][0]}', '{queryes['amount'][0]}', '{str(uuida)}');")
                 con.commit()
                 cur.close()
             the_page = "OK"
@@ -127,5 +131,3 @@ if __name__ == '__main__':
     server = HTTPServer(('localhost', 8082), GetHandler)
     print('Starting server, use <Ctrl-C> to stop')
     server.serve_forever()
-    
-    
